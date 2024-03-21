@@ -1,30 +1,35 @@
 #locationName {
-    /* margin-top: 0.7rem; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #333444;
-    color: #fff;
+  /* margin-top: 0.7rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #333444;
+  color: #fff;
 }
 
 #app {
-    padding-top: 0.7rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding-top: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
-#app .current-pollen {
-    background: #00000066;
-    width: 90%;
-    color: #fff;
-    text-align: center;
+#app .current-pollen,
+#app .hourly-pollen {
+  background: #72192488;
+  width: 90%;
+  color: #fff;
+  text-align: center;
 }
 
-.current-pollen ul {
-    padding: 0;
+.current-pollen ul,
+.hourly-pollen ul {
+  padding: 0;
 }
 
-.current-pollen ul li {
-    list-style-type: none;
+.current-pollen ul li,
+.hourly-pollen ul li {
+  list-style-type: none;
 }
