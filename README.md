@@ -1,3 +1,3 @@
 # Pollen App
-App hvor man kan se pollen tal ved ens lokation
-page:
+App hvor man kan se pollental ved ens lokation
+Page:
