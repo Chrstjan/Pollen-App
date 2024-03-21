@@ -6,17 +6,19 @@ getLocation();
 */
 function getLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    //geolocation.getCurrentPosition requires a sucess function and a error function to call to function
+      navigator.geolocation.getCurrentPosition(recivedPostion, showError);
     } else {
      alert("Geolocation is not supported by this browser.");
     }
   }
   
   /*Gets the position parementer from getLocation
-  console logs the users longtitude & latitude */
-  function showPosition(position) {
-    console.log("longitude:" + position.coords.longitude)
-    console.log("latitude:" + position.coords.latitude)
+  console logs the users longtitude & latitude data objects*/
+  function recivedPostion(position) {
+    // console.log(position);
+    console.log("latitude:" + position.coords.latitude);
+    console.log("longitude:" + position.coords.longitude);
   }
 
   /*Handles geolocation errors
@@ -24,18 +26,5 @@ function getLocation() {
     console logs error after which error occurs
   */
   function showError(error) {
-    switch(error.code) {
-      case error.PERMISSION_DENIED:
-         console.log("User denied the request for Geolocation.");
-        break;
-      case error.POSITION_UNAVAILABLE:
-         console.log("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        console.log("The request to get user location timed out.");
-        break;
-      case error.UNKNOWN_ERROR:
-        console.log("An unknown error occurred.");
-        break;
-    }
+    console.log(error.message);
   }
