@@ -36,6 +36,25 @@ function getLocation() {
       });
   }
 
+  function getPollenData(lat, long) {
+    console.log(lat);
+    console.log(long);
+    // fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${long}&api_key=65fbef1c16355178751609wmp6b195b`)
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //         throw new Error("Network response was not ok");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((json) => {
+    //     console.log(json);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error fetching data:", error);
+    //     return null;
+    //   });
+  }
+
   //#endregion model code
 
   //#region controller code
@@ -48,6 +67,7 @@ function getLocation() {
     console.log("longitude:" + position.coords.longitude);
 
     getUserLocationName(position.coords.latitude, position.coords.longitude)
+    getPollenData(position.coords.latitude, position.coords.longitude);
   }
 
   /*Handles geolocation errors
@@ -62,7 +82,7 @@ function getLocation() {
   //#region view code
  function buildLocationName(address) {
     clearApp();
-    
+
     let cityName = `<header><h2>${address}</h2></header>`;
 
     app.innerHTML += cityName;
