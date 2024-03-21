@@ -79,9 +79,29 @@ function getLocation() {
 
   function pollenDataStructure(data) {
     let viewData = [];
+    console.log(data);
     viewData.push(data.current);
 
-    //Data about current values
+    let timestamps = data.hourly.time;
+
+    let hourData = [];
+
+    timestamps.map((time, index) => {
+        let hourDataObjects = {};
+        hourDataObjects.time = time;
+        hourDataObjects.alder_pollen = data.hourly.alder_pollen[index];
+        hourDataObjects.birch_pollen = data.hourly.birch_pollen[index];
+        hourDataObjects.grass_pollen = data.hourly.grass_pollen[index];
+        hourDataObjects.mugwort_pollen = data.hourly.mugwort_pollen[index];
+        hourDataObjects.olive_pollen = data.hourly.olive_pollen[index];
+        hourDataObjects.ragweed_pollen = data.hourly.ragweed_pollen[index];
+
+        hourData.push(hourDataObjects);
+
+    });
+
+    viewData.push(hourData);
+
     buildPollenView(viewData);
   }
   //#endregion controller code
@@ -89,7 +109,7 @@ function getLocation() {
   //#region view code
  function buildLocationName(address) {
 
-    let cityName = `<header><h2>${address}</h2></header>`;
+    let cityName = `<header><h2>Location: ${address}</h2></header>`;
 
     locationName.innerHTML += cityName;
   }
@@ -112,6 +132,13 @@ function getLocation() {
                 <li>Ambrosia ${viewData[0].ragweed_pollen}</li>
             </ul>
         </div>`;
+
+    let hourlyPollen = `
+        <div class="hourly-pollen">
+            <header>
+                <h4></h4>
+            </header>
+        </div>`
 
     app.innerHTML += currentPollen;
 }
