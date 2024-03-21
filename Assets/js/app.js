@@ -1,4 +1,5 @@
 //GLOBALS
+const locationName = document.getElementById("locationName");
 const app = document.getElementById("app");
 getLocation();
 
@@ -37,22 +38,20 @@ function getLocation() {
   }
 
   function getPollenData(lat, long) {
-    console.log(lat);
-    console.log(long);
-    // fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${long}&api_key=65fbef1c16355178751609wmp6b195b`)
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //         throw new Error("Network response was not ok");
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((json) => {
-    //     console.log(json);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error fetching data:", error);
-    //     return null;
-    //   });
+    fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${long}&current=alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&hourly=alder_pollen,birch_pollen,grass_pollen,mugwort_pollen,olive_pollen,ragweed_pollen&timezone=Europe%2FBerlin&forecast_days=1`)
+      .then((res) => {
+        if (!res.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((json) => {
+        pollenDataStructure(json);
+      })
+      .catch((error) => {
+        console.log("Error fetching data:", error);
+        return null;
+      });
   }
 
   //#endregion model code
@@ -77,16 +76,45 @@ function getLocation() {
   function showError(error) {
     console.log(error.message);
   }
+
+  function pollenDataStructure(data) {
+    let viewData = [];
+    viewData.push(data.current);
+
+    //Data about current values
+    buildPollenView(viewData);
+  }
   //#endregion controller code
 
   //#region view code
  function buildLocationName(address) {
-    clearApp();
 
     let cityName = `<header><h2>${address}</h2></header>`;
 
-    app.innerHTML += cityName;
+    locationName.innerHTML += cityName;
   }
+
+ function buildPollenView(viewData) {
+    clearApp();
+    console.log(viewData); 
+
+    let currentPollen = `
+        <div class="current-pollen">
+            <header>
+                <h2>Pollental</h2>
+            </header>
+            <ul>
+                <li>El ${viewData[0].alder_pollen}</li>
+                <li>Birk ${viewData[0].birch_pollen}</li>
+                <li>Græs ${viewData[0].grass_pollen}</li>
+                <li>Bynke ${viewData[0].mugwort_pollen}</li>
+                <li>Oliven ${viewData[0].olive_pollen}</li>
+                <li>Ambrosia ${viewData[0].ragweed_pollen}</li>
+            </ul>
+        </div>`;
+
+    app.innerHTML += currentPollen;
+}
 
   function clearApp() {
     app.innerHTML = "";

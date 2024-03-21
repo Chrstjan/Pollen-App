@@ -1,5 +1,30 @@
-#app {
+#locationName {
+    margin-top: 0.7rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #333444;
+    color: #fff;
+}
+
+#app {
+    padding-top: 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#app .current-pollen {
+    background: #00000066;
+    width: 90%;
+    color: #fff;
+    text-align: center;
+}
+
+.current-pollen ul {
+    padding: 0;
+}
+
+.current-pollen ul li {
+    list-style-type: none;
 }
