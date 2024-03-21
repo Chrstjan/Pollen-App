@@ -1,4 +1,5 @@
 //GLOBALS
+const app = document.getElementById("app");
 getLocation();
 
 
@@ -27,6 +28,7 @@ function getLocation() {
       })
       .then((json) => {
         console.log(json);
+        buildLocationName(json.address.city);
       })
       .catch((error) => {
         console.log("Error fetching data:", error);
@@ -56,3 +58,17 @@ function getLocation() {
     console.log(error.message);
   }
   //#endregion controller code
+
+  //#region view code
+ function buildLocationName(address) {
+    clearApp();
+    
+    let cityName = `<header><h2>${address}</h2></header>`;
+
+    app.innerHTML += cityName;
+  }
+
+  function clearApp() {
+    app.innerHTML = "";
+  }
+  //#endregion view code
