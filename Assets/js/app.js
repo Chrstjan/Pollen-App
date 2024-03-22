@@ -119,7 +119,6 @@ function pollenDataStructure(data) {
   viewData.push(hourData);
   viewData.push(hasPollen);
 
-  // viewData.push(hourData);
   if (!hasPollen) {
     buildNoPollen();
   }
@@ -190,3 +189,35 @@ function clearApp() {
   app.innerHTML = "";
 }
 //#endregion view code
+
+//test
+// document.querySelector('iframe').addEventListener('load', function() {
+//   let map = this.contentDocument || this.contentWindow.document;
+//   map.querySelector('html').addEventListener('click', function(event) {
+//       // Hent latituden og longituden for det klikkede stedet
+//       let lat = event.latLng.lat();
+//       let long = event.latLng.long();
+
+//       // Kall funksjonen for å hente polleninformasjonen med de hentede koordinatene
+//       getPollenData(lat, long);
+//   });
+// });
+window.addEventListener('DOMContentLoaded', function() {
+  const iframe = document.querySelector('iframe');
+ 
+  // Add event listener for when the iframe content has loaded
+  iframe.addEventListener('load', function() {
+    // Get the contentDocument or contentWindow of the iframe
+    const mapDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Add click event listener to the map within the iframe
+    mapDocument.querySelector('html').addEventListener('click', function(event) {
+      // Retrieve latitude and longitude of the clicked location
+      const lat = event.latLng.lat(); // Assuming you're using Google Maps API
+      const long = event.latLng.long(); // Assuming you're using Google Maps API
+
+      // Call the function to retrieve pollen data with the obtained coordinates
+      getPollenData(lat, long);
+    });
+  });
+});
