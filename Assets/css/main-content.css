@@ -24,6 +24,15 @@
   text-align: center;
 }
 
+.hourly-pollen .hourly-header h4{
+  margin: 0;
+  padding-bottom: 0.5rem;
+}
+
+#app .hourly-pollen:last-of-type {
+  margin-bottom: 2rem;
+}
+
 .current-pollen ul,
 .hourly-pollen ul {
   padding: 0;
@@ -33,3 +42,4 @@
 .hourly-pollen ul li {
   list-style-type: none;
 }
+

@@ -89,9 +89,11 @@ function pollenDataStructure(data) {
 
   let hourData = [];
 
-  timestamps.map((time, index) => {
+  let hasPollen = false;
+
+  timestamps.map((timestamp, index) => {
     let hourDataObjects = {};
-    hourDataObjects.time = time;
+    hourDataObjects.time = timestamp;
     hourDataObjects.alder_pollen = data.hourly.alder_pollen[index];
     hourDataObjects.birch_pollen = data.hourly.birch_pollen[index];
     hourDataObjects.grass_pollen = data.hourly.grass_pollen[index];
@@ -99,12 +101,31 @@ function pollenDataStructure(data) {
     hourDataObjects.olive_pollen = data.hourly.olive_pollen[index];
     hourDataObjects.ragweed_pollen = data.hourly.ragweed_pollen[index];
 
-    hourData.push(hourDataObjects);
+
+    if (
+      hourDataObjects.alder_pollen !== 0 ||
+      hourDataObjects.birch_pollen !== 0 ||
+      hourDataObjects.grass_pollen !== 0 ||
+      hourDataObjects.mugwort_pollen !== 0 ||
+      hourDataObjects.olive_pollen !== 0 ||
+      hourDataObjects.ragweed_pollen !== 0
+      ) 
+      {
+        hasPollen = true;
+        hourData.push(hourDataObjects);
+      }
   });
 
   viewData.push(hourData);
+  viewData.push(hasPollen);
 
-  buildPollenView(viewData);
+  // viewData.push(hourData);
+  if (!hasPollen) {
+    buildNoPollen();
+  }
+  else {
+    buildPollenView(viewData);
+  }
 }
 //#endregion controller code
 
@@ -136,25 +157,33 @@ function buildPollenView(viewData) {
 
   app.innerHTML += currentPollen;
 
+  
   viewData[1].forEach((hour) => {
     console.log(hour);
     let hourlyPollen = `
         <div class="hourly-pollen">
             <header>
-                <h4>${hour.time}</h4>
+                <h4>Time: ${hour.time}</h4>
             </header>
             <ul>
-              <li>El ${hour.alder_pollen}</li>
-              <li>Birk ${hour.birch_pollen}</li>
-              <li>Græs ${hour.grass_pollen}</li>
-              <li>Bynke ${hour.mugwort_pollen}</li>
-              <li>Oliven ${hour.olive_pollen}</li>
-              <li>Ambrosia ${hour.ragweed_pollen}</li>
+              <header class="hourly-header"><h4>Pollen:</h4></header>
+              <li>El: ${hour.alder_pollen}</li>
+              <li>Birk: ${hour.birch_pollen}</li>
+              <li>Græs: ${hour.grass_pollen}</li>
+              <li>Bynke: ${hour.mugwort_pollen}</li>
+              <li>Oliven: ${hour.olive_pollen}</li>
+              <li>Ambrosia: ${hour.ragweed_pollen}</li>
             </ul>
         </div>`;
 
     app.innerHTML += hourlyPollen;
   });
+}
+
+function buildNoPollen() {
+  // clearApp();
+  let noPollen = `<div><header><h3>No Pollen Right now</h3></header></div>`;
+  app.innerHTML += noPollen;
 }
 
 function clearApp() {
